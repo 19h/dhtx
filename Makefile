@@ -3,7 +3,7 @@
 all: test magneticod magneticow
 
 magneticod:
-	go install --tags fts5 "-ldflags=-s -w -X main.compiledOn=`date -u +%Y-%m-%dT%H:%M:%SZ`" ./cmd/magneticod
+	go install --tags fts5 "-ldflags=-s -w -X main.compiledOn=`date -u +%Y-%m-%dT%H:%M:%SZ` -extldflags "-Wl,--allow-multiple-definition"" ./cmd/magneticod
 
 magneticow:
 	# TODO: minify files!
@@ -11,7 +11,7 @@ magneticow:
 	go-bindata -pkg "main" -o="cmd/magneticow/bindata.go" -prefix="cmd/magneticow/data/" cmd/magneticow/data/...
 	# Prepend the linter instruction to the beginning of the file
 	sed -i '1s;^;//lint:file-ignore * Ignore file altogether\n;' cmd/magneticow/bindata.go
-	go install --tags fts5 "-ldflags=-s -w -X main.compiledOn=`date -u +%Y-%m-%dT%H:%M:%SZ`" ./cmd/magneticow
+	go install --tags fts5 "-ldflags=-s -w -X main.compiledOn=`date -u +%Y-%m-%dT%H:%M:%SZ` -extldflags "-Wl,--allow-multiple-definition"" ./cmd/magneticow
 
 .PHONY: docker
 docker: docker_up docker_logs
