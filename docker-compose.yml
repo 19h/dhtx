@@ -2,18 +2,24 @@ version: "2"
 
 services:
   magneticod:
-    image: boramalper/magneticod:latest
+#    image: boramalper/magneticod:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.magneticod
     volumes:
-      - ${MAGNETICOD_DATA}:/root/.local/share/magneticod
-      - ${MAGNETICOD_CONFIG}:/root/.config/magneticod
+      - ../magneticod_data/:/root/.local/share/magneticod
+      - ../magneticod_conf/:/root/.config/magneticod
     network_mode: "host"
     command:
       - "--indexer-addr=0.0.0.0:1212"
 
   magneticow:
-    image: boramalper/magneticow:latest
+#    image: boramalper/magneticow:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.magneticow
     volumes:
-      - ${MAGNETICOD_DATA}:/root/.local/share/magneticod
-      - ${MAGNETICOW_CONFIG}:/root/.config/magneticow
+      - ../magneticod_data/:/root/.local/share/magneticod
+      - ../magneticow_conf/:/root/.config/magneticow
     ports:
       - "8080:8080"
